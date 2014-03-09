@@ -33,9 +33,7 @@ def get_student_by_github(github):
     query = """SELECT first_name, last_name, github FROM Students WHERE github = ?"""
     DB.execute(query, (github,))
     row = DB.fetchone()
-    return """\
-Student: %s %s
-Github account: %s"""%(row[0], row[1], row[2])
+    return row
     
 
 def get_project_by_title(title):
@@ -50,7 +48,18 @@ def get_grade_from_grades(max_grade):
     DB.execute(query, (max_grade,))
     row = DB.fetchone()
     return row
-    
+
+def get_all_grades_for_one_student(title):
+    query = """SELECT title, description, max_grade FROM Grades WHERE title = ?"""
+    DB.execute(query, (title,))
+    row = DB.fetchall()
+    return row
+
+def get_students_and_grades_by_project_name(description):
+    query = """SELECT title, description, max_grade FROM Grades WHERE description = ?"""
+    DB.execute(query, (description,))
+    row = DB.fetchall()
+    return row
 
 def main():
     connect_to_db()
@@ -73,6 +82,11 @@ def main():
             print get_grade_from_grades(*args)
         elif command == "make_new_grade":
             print make_new_grade(*args)
+        elif command == "get_grades":
+            print get_all_grades_for_one_student(*args)
+        elif command == "project_name":
+            print get_students_and_grades_by_project_name(*args)
+
 
     CONN.close()
 
