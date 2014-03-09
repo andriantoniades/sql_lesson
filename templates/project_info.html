@@ -1,0 +1,8 @@
+<html>
+<body>
+<h1>Project: {{ project }}</h1>
+{% for project_grade in student_grades %}
+	{{project_grade[0]}}: {{project_grade[2]}}
+{% endfor %} 
+</body>
+</html>
